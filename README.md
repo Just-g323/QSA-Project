@@ -1,2 +1,2 @@
 # QSA-Project
-Idk for yufes
+Idk for yufes and badori 
