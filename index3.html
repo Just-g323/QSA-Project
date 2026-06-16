@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QSA International | Aviation Engineering Services</title>
+<meta name="description" content="QSA International delivers EASA-approved line maintenance, technical training, and aviation engineering services across global stations in UAE, Morocco, Europe, Africa, and the Middle East.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
+<script src="https://unpkg.com/globe.gl@2.26.4/dist/globe.gl.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#0A1628;--navy-mid:#122040;--navy-light:#1A3060;
+  --blue:#1565C0;--blue-bright:#1E88E5;--cyan:#00B4D8;
+  --silver:#8EA5C0;--silver-light:#C8D8EC;--accent:#E8A020;
+  --white:#FFFFFF;--off-white:#F4F7FC;
+  --text-dark:#0A1628;--text-mid:#374560;--text-muted:#6B7FA0;
+  --border:rgba(30,80,160,0.12);--border-light:rgba(30,80,160,0.07);
+  --font-display:'Sora',sans-serif;--font-body:'Inter',sans-serif;
+  --transition:0.25s cubic-bezier(0.4,0,0.2,1);
+  --radius:12px;--radius-lg:20px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);color:var(--text-dark);background:var(--white);line-height:1.6;overflow-x:hidden;}
+h1,h2,h3,h4,h5{font-family:var(--font-display);}
+.display-xl{font-size:clamp(2.4rem,5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-0.02em;}
+.display-lg{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:600;line-height:1.15;letter-spacing:-0.015em;}
+.label{font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;}
+.container{max-width:1240px;margin:0 auto;padding:0 1.5rem;}
+.section{padding:100px 0;}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 1.5rem;background:rgba(10,22,40,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);height:68px;display:flex;align-items:center;}
+.nav-inner{max-width:1240px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-text{color:var(--white);font-family:var(--font-display);font-weight:600;font-size:1rem;line-height:1.2;}
+.nav-logo-text span{display:block;font-size:0.7rem;font-weight:400;color:var(--silver);letter-spacing:0.06em;}
+.nav-links{display:flex;align-items:center;gap:0.25rem;list-style:none;}
+.nav-links a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:0.875rem;font-weight:500;padding:0.5rem 0.85rem;border-radius:8px;transition:var(--transition);}
+.nav-links a:hover{color:var(--white);background:rgba(255,255,255,0.08);}
+.nav-cta{background:var(--blue);color:var(--white)!important;padding:0.5rem 1.1rem!important;border-radius:8px!important;}
+.nav-cta:hover{background:var(--blue-bright)!important;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:var(--navy);border-top:1px solid rgba(255,255,255,0.06);padding:1rem 1.5rem 1.5rem;z-index:999;}
+.mobile-menu.open{display:block;}
+.mobile-menu a{display:block;color:rgba(255,255,255,0.8);text-decoration:none;font-size:1rem;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.8rem 1.8rem;border-radius:10px;font-size:0.9rem;font-weight:600;font-family:var(--font-body);cursor:pointer;transition:var(--transition);text-decoration:none;border:none;}
+.btn-primary{background:var(--blue);color:var(--white);}
+.btn-primary:hover{background:var(--blue-bright);transform:translateY(-1px);box-shadow:0 8px 24px rgba(21,101,192,0.35);}
+.btn-outline{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,0.3);}
+.btn-outline:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.6);transform:translateY(-1px);}
+.btn-accent{background:var(--accent);color:var(--navy);}
+.btn-accent:hover{background:#f0b030;transform:translateY(-1px);}
+.btn-dark{background:var(--navy);color:var(--white);}
+.btn-dark:hover{background:var(--navy-mid);transform:translateY(-1px);}
+
+/* SECTION HEADERS */
+.section-eyebrow{color:var(--blue-bright);margin-bottom:0.75rem;}
+.section-title{color:var(--navy);margin-bottom:1rem;}
+.section-subtitle{color:var(--text-muted);font-size:1.05rem;line-height:1.7;max-width:560px;}
+.section-header{margin-bottom:3.5rem;}
+.section-header.center{text-align:center;}
+.section-header.center .section-subtitle{margin:0 auto;}
+
+/* HERO */
+#hero{min-height:100vh;background:var(--navy);position:relative;display:flex;align-items:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 80% 50%,rgba(21,101,192,0.22) 0%,transparent 65%),linear-gradient(160deg,#0A1628 0%,#0E1F40 40%,#122850 100%);}
+.hero-grid-bg{position:absolute;inset:0;opacity:0.05;background-image:linear-gradient(rgba(255,255,255,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.5) 1px,transparent 1px);background-size:60px 60px;}
+.hero-content{position:relative;z-index:2;width:100%;}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;min-height:100vh;padding:120px 0 80px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(21,101,192,0.2);border:1px solid rgba(21,101,192,0.35);color:#90CAF9;font-size:0.78rem;font-weight:600;letter-spacing:0.08em;padding:0.4rem 0.9rem;border-radius:100px;margin-bottom:1.5rem;}
+.hero-badge::before{content:'';width:6px;height:6px;background:#42A5F5;border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.hero-title{color:var(--white);margin-bottom:1.25rem;}
+.hero-title .accent{color:var(--accent);}
+.hero-subtitle{color:rgba(255,255,255,0.62);margin-bottom:2.25rem;font-size:1.1rem;line-height:1.7;max-width:500px;}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem;}
+.hero-stats{display:flex;gap:2.5rem;border-top:1px solid rgba(255,255,255,0.1);padding-top:2rem;}
+.hero-stat-num{font-family:var(--font-display);font-size:2rem;font-weight:700;color:var(--white);}
+.hero-stat-label{font-size:0.8rem;color:var(--silver);margin-top:2px;}
+.hero-visual{display:flex;align-items:center;justify-content:center;}
+.hero-plane-svg{width:100%;max-width:560px;filter:drop-shadow(0 20px 60px rgba(21,101,192,0.4));}
+.aircraft-glow{animation:glow-pulse 3s ease-in-out infinite;}
+@keyframes glow-pulse{0%,100%{opacity:0.7;}50%{opacity:1;}}
+
+/* SERVICES */
+#services{background:var(--off-white);}
+.service-card{border-radius:var(--radius-lg);overflow:hidden;background:var(--white);border:1px solid var(--border);transition:var(--transition);}
+.service-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(10,22,40,0.1);}
+.service-card-header{background:var(--navy);padding:2rem;position:relative;overflow:hidden;}
+.service-card-header::after{content:'';position:absolute;right:-20px;top:-20px;width:120px;height:120px;background:rgba(21,101,192,0.2);border-radius:50%;}
+.service-card-header .icon{width:52px;height:52px;background:rgba(255,255,255,0.1);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;position:relative;z-index:1;}
+.service-card-header h3{color:var(--white);font-size:1.15rem;position:relative;z-index:1;}
+.service-card-body{padding:1.75rem;}
+.service-card-body p{color:var(--text-muted);font-size:0.9rem;line-height:1.7;margin-bottom:1.25rem;}
+.service-list{list-style:none;}
+.service-list li{font-size:0.875rem;color:var(--text-mid);padding:0.45rem 0;border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:0.6rem;}
+.service-list li::before{content:'';width:6px;height:6px;background:var(--blue-bright);border-radius:50%;flex-shrink:0;}
+
+/* WHY QSA */
+#why{background:var(--navy);}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.why-feature{display:flex;gap:1rem;margin-bottom:1.5rem;}
+.why-feature-icon{width:44px;height:44px;background:rgba(21,101,192,0.25);border:1px solid rgba(21,101,192,0.35);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.why-feature h4{color:var(--white);font-size:0.95rem;font-weight:600;margin-bottom:0.25rem;}
+.why-feature p{color:rgba(255,255,255,0.55);font-size:0.875rem;margin:0;}
+.approval-badges{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
+.approval-badge{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:1.25rem;text-align:center;}
+.approval-badge .badge-code{font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--accent);}
+.approval-badge .badge-desc{font-size:0.78rem;color:var(--silver);margin-top:4px;}
+
+/* GLOBE SECTION */
+#globe-section{background:var(--navy);padding:80px 0 60px;}
+#globe-section .section-eyebrow{color:var(--accent);}
+#globe-section .section-title{color:var(--white);}
+#globe-section .section-subtitle{color:var(--silver-light);}
+.globe-layout{display:flex;gap:0;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-lg);overflow:hidden;min-height:580px;}
+.globe-panel{flex:1 1 0;min-width:0;position:relative;background:radial-gradient(ellipse at 55% 50%,rgba(0,40,100,0.5) 0%,rgba(5,12,28,0.95) 100%);}
+#globe-canvas{width:100%;height:100%;min-height:540px;}
+
+/* Location card overlay */
+#loc-card{
+  position:absolute;top:16px;left:16px;
+  background:rgba(6,14,34,0.97);
+  border:1px solid rgba(0,180,216,0.4);
+  border-radius:16px;padding:1.25rem 1.4rem 1.1rem;
+  min-width:230px;max-width:290px;
+  color:var(--white);font-size:0.82rem;
+  backdrop-filter:blur(20px);
+  box-shadow:0 0 0 1px rgba(0,180,216,0.08),0 20px 50px rgba(0,0,0,0.7);
+  display:none;z-index:20;
+  animation:card-in 0.22s ease;
+}
+@keyframes card-in{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+#loc-card .lc-close{position:absolute;top:10px;right:12px;background:none;border:none;color:rgba(255,255,255,0.35);cursor:pointer;font-size:1rem;line-height:1;transition:color 0.15s;}
+#loc-card .lc-close:hover{color:var(--white);}
+#loc-card .lc-title{font-family:var(--font-display);font-size:0.98rem;font-weight:700;color:var(--cyan);margin-bottom:0.1rem;padding-right:1.5rem;line-height:1.3;}
+#loc-card .lc-code{font-size:0.68rem;font-weight:700;letter-spacing:0.12em;color:var(--accent);margin-bottom:0.7rem;text-transform:uppercase;}
+#loc-card .lc-type-badge{display:inline-block;font-size:0.67rem;font-weight:600;padding:2px 9px;border-radius:4px;margin-bottom:0.75rem;letter-spacing:0.05em;text-transform:uppercase;}
+#loc-card .lc-type-badge.hq{background:rgba(232,160,32,0.18);color:var(--accent);border:1px solid rgba(232,160,32,0.3);}
+#loc-card .lc-type-badge.station{background:rgba(0,180,216,0.12);color:var(--cyan);border:1px solid rgba(0,180,216,0.25);}
+#loc-card .lc-row{display:flex;gap:0.5rem;margin-bottom:0.35rem;align-items:flex-start;}
+#loc-card .lc-label{color:rgba(255,255,255,0.35);width:68px;flex-shrink:0;font-size:0.75rem;padding-top:1px;}
+#loc-card .lc-val{color:rgba(255,255,255,0.88);font-size:0.78rem;line-height:1.5;}
+#loc-card .lc-val a{color:#90CAF9;text-decoration:none;}
+#loc-card .lc-val a:hover{text-decoration:underline;}
+#loc-card .lc-divider{height:1px;background:rgba(255,255,255,0.06);margin:0.65rem 0;}
+#loc-card .lc-verify{margin-top:0.7rem;padding:0.45rem 0.7rem;background:rgba(232,160,32,0.07);border:1px solid rgba(232,160,32,0.2);border-radius:7px;font-size:0.72rem;color:#f0b030;line-height:1.4;}
+
+/* Globe legend */
+.globe-legend{width:248px;flex-shrink:0;background:rgba(4,10,24,0.99);border-left:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;overflow:hidden;}
+.legend-header{padding:1rem 1rem 0.8rem;border-bottom:1px solid rgba(255,255,255,0.05);}
+.legend-header h3{font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.7rem;}
+.legend-search{position:relative;}
+.legend-search input{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:8px;padding:0.5rem 0.7rem 0.5rem 2rem;color:var(--white);font-size:0.8rem;font-family:var(--font-body);outline:none;}
+.legend-search input::placeholder{color:rgba(255,255,255,0.25);}
+.legend-search input:focus{border-color:var(--cyan);}
+.legend-search svg{position:absolute;left:7px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:rgba(255,255,255,0.25);fill:none;}
+.legend-body{flex:1;overflow-y:auto;padding:0.4rem 0;}
+.legend-body::-webkit-scrollbar{width:3px;}
+.legend-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px;}
+.lg-country{margin-bottom:2px;}
+.lg-country-hdr{display:flex;align-items:center;gap:7px;padding:0.5rem 1rem;cursor:pointer;transition:background 0.15s;border-radius:0;}
+.lg-country-hdr:hover{background:rgba(255,255,255,0.04);}
+.lg-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.lg-country-name{font-size:0.8rem;font-weight:600;color:rgba(255,255,255,0.8);flex:1;}
+.lg-count{font-size:0.68rem;color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.07);padding:1px 6px;border-radius:10px;}
+.lg-chevron{font-size:0.55rem;color:rgba(255,255,255,0.25);transition:transform 0.2s;margin-left:2px;}
+.lg-chevron.open{transform:rotate(90deg);}
+.lg-stations{overflow:hidden;max-height:0;transition:max-height 0.32s ease;}
+.lg-stations.open{max-height:600px;}
+.lg-station{display:flex;align-items:center;gap:8px;padding:0.38rem 1rem 0.38rem 2.1rem;cursor:pointer;transition:background 0.15s;position:relative;}
+.lg-station:hover{background:rgba(255,255,255,0.04);}
+.lg-station.active{background:rgba(0,180,216,0.1);}
+.lg-station.active::after{content:'';position:absolute;right:0;top:0;bottom:0;width:2px;background:var(--cyan);}
+.lg-station.active .lg-city{color:var(--cyan);}
+.lg-station-type{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.lg-city{font-size:0.79rem;color:rgba(255,255,255,0.7);flex:1;line-height:1.3;}
+.lg-city .lg-hq-tag{font-size:0.6rem;color:rgba(232,160,32,0.7);margin-left:4px;font-weight:600;}
+.lg-iata{font-size:0.68rem;color:rgba(255,255,255,0.22);font-weight:600;letter-spacing:0.06em;}
+.globe-type-legend{padding:0.7rem 1rem;border-top:1px solid rgba(255,255,255,0.05);}
+.gtl-row{display:flex;align-items:center;gap:7px;font-size:0.72rem;color:rgba(255,255,255,0.35);margin-bottom:4px;}
+.gtl-dot{width:6px;height:6px;border-radius:50%;}
+
+/* APPROVALS - redesigned with real logos */
+#approvals{background:var(--off-white);}
+.approval-filter-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.aff-btn{padding:0.4rem 1.1rem;border-radius:8px;border:1px solid var(--border);background:var(--white);color:var(--text-mid);font-size:0.82rem;font-weight:500;cursor:pointer;transition:var(--transition);}
+.aff-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy);}
+.approvals-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;}
+
+/* Approval card */
+.ap-card{
+  background:var(--white);
+  border:1px solid rgba(30,80,160,0.1);
+  border-radius:16px;
+  padding:1.5rem 1.25rem 1.25rem;
+  text-align:center;
+  transition:var(--transition);
+  display:flex;flex-direction:column;align-items:center;
+  cursor:default;
+}
+.ap-card:hover{
+  border-color:rgba(21,101,192,0.3);
+  box-shadow:0 12px 36px rgba(21,101,192,0.1);
+  transform:translateY(-3px);
+}
+.ap-logo-wrap{
+  width:100%;height:76px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1rem;
+}
+/* Real logo image - transparent jpg on white card */
+.ap-logo-img{
+  max-width:150px;max-height:68px;
+  width:auto;height:auto;
+  object-fit:contain;
+  /* ensure transparency shows on white card */
+  mix-blend-mode:normal;
+}
+.ap-name{font-size:0.82rem;font-weight:700;color:var(--navy);margin-bottom:0.15rem;font-family:var(--font-display);}
+.ap-authority{font-size:0.72rem;color:var(--text-muted);margin-bottom:0.5rem;line-height:1.4;}
+.ap-status{display:inline-block;font-size:0.67rem;font-weight:600;padding:2px 8px;border-radius:4px;letter-spacing:0.04em;}
+.ap-status.approved{background:rgba(21,150,80,0.09);color:#0a7c40;border:1px solid rgba(21,150,80,0.18);}
+.ap-status.verify{background:rgba(232,160,32,0.09);color:#a06010;border:1px solid rgba(232,160,32,0.2);}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.timeline-item{display:flex;gap:1.25rem;padding-bottom:2rem;position:relative;}
+.timeline-item::before{content:'';position:absolute;left:15px;top:32px;bottom:0;width:1px;background:var(--border);}
+.timeline-item:last-child::before{display:none;}
+.timeline-dot{width:32px;height:32px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:white;font-size:0.7rem;font-weight:700;}
+.timeline-text h4{font-size:0.9rem;font-weight:600;color:var(--navy);margin-bottom:0.2rem;}
+.timeline-text p{font-size:0.85rem;color:var(--text-muted);}
+
+/* CAREERS */
+#careers{background:var(--off-white);}
+.career-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;transition:var(--transition);}
+.career-card:hover{border-color:var(--blue);transform:translateX(4px);}
+.career-badge{background:rgba(21,101,192,0.1);color:var(--blue);font-size:0.75rem;font-weight:600;padding:0.25rem 0.7rem;border-radius:100px;display:inline-block;margin-bottom:0.5rem;}
+.career-card h4{font-size:1rem;font-weight:600;color:var(--navy);}
+.career-card p{font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;}
+
+/* CONTACT */
+#contact{background:var(--navy);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.contact-item{display:flex;gap:1rem;margin-bottom:1.75rem;}
+.contact-icon{width:44px;height:44px;background:rgba(21,101,192,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.contact-item h4{font-size:0.82rem;color:var(--silver);font-weight:500;margin-bottom:0.25rem;text-transform:uppercase;letter-spacing:0.07em;}
+.contact-item p,.contact-item a{color:var(--white);font-size:0.9rem;text-decoration:none;display:block;margin-bottom:2px;}
+.contact-item a:hover{color:#90CAF9;}
+.contact-form-wrap{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-lg);padding:2rem;}
+.form-group{margin-bottom:1.25rem;}
+.form-group label{display:block;font-size:0.82rem;font-weight:500;color:var(--silver);margin-bottom:0.5rem;letter-spacing:0.04em;}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.75rem 1rem;color:var(--white);font-family:var(--font-body);font-size:0.9rem;transition:var(--transition);outline:none;}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,0.3);}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--blue-bright);background:rgba(21,101,192,0.1);}
+.form-group textarea{resize:vertical;min-height:110px;}
+.form-group select option{background:var(--navy);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+
+/* FOOTER */
+footer{background:#060E1C;color:var(--silver);padding:60px 0 30px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+.footer-brand p{font-size:0.875rem;line-height:1.7;margin-top:1rem;max-width:280px;}
+.footer-col h5{color:var(--white);font-size:0.85rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:1.25rem;}
+.footer-col a{display:block;color:var(--silver);text-decoration:none;font-size:0.875rem;margin-bottom:0.6rem;transition:color 0.2s;}
+.footer-col a:hover{color:var(--white);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;color:rgba(255,255,255,0.35);}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.approvals-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;padding:100px 0 60px;}
+  .hero-visual{display:none;}
+  .why-grid,.about-grid,.contact-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:2rem;}
+  nav .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .globe-layout{flex-direction:column;}
+  .globe-legend{width:100%;max-height:260px;border-left:none;border-top:1px solid rgba(255,255,255,0.06);}
+  #globe-canvas{min-height:360px;}
+  .approvals-grid{grid-template-columns:repeat(3,1fr);}
+  .form-row{grid-template-columns:1fr;}
+  #loc-card{left:8px;right:8px;top:8px;max-width:none;}
+}
+@media(max-width:600px){
+  .section{padding:70px 0;}
+  .footer-grid{grid-template-columns:1fr;}
+  .hero-actions{flex-direction:column;align-items:flex-start;}
+  .approvals-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s cubic-bezier(0.4,0,0.2,1),transform 0.65s cubic-bezier(0.4,0,0.2,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <svg width="46" height="46" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path id="tArc" d="M 18,60 A 42,42 0 0,1 102,60" fill="none"/>
+        <path id="bArc" d="M 18,60 A 42,42 0 0,0 102,60" fill="none"/>
+        <rect x="33" y="43" width="54" height="40" rx="7" fill="#0A1628" stroke="#C8372A" stroke-width="2.2"/>
+        <text x="60" y="70" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="21" fill="#E8A020">QSA</text>
+        <path d="M 33 53 Q 18 46 8 42" stroke="#C8372A" stroke-width="2" fill="none"/>
+        <path d="M 87 53 Q 102 46 112 42" stroke="#C8372A" stroke-width="2" fill="none"/>
+        <text font-family="Inter,sans-serif" font-weight="600" font-size="7.2" fill="#C8372A" letter-spacing="2.2"><textPath href="#tArc" startOffset="11%">AERONAUTICAL ENGINEERING</textPath></text>
+        <text font-family="Inter,sans-serif" font-weight="600" font-size="7.2" fill="#C8372A" letter-spacing="2.2"><textPath href="#bArc" startOffset="30%">SERVICES</textPath></text>
+      </svg>
+      <div class="nav-logo-text">QSA International <span>Aeronautical Engineering Services</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#globe-section">Locations</a></li>
+      <li><a href="#approvals">Approvals</a></li>
+      <li><a href="#careers">Careers</a></li>
+      <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle menu" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu">
+  <a href="#about" onclick="this.closest('.mobile-menu').classList.remove('open')">About</a>
+  <a href="#services" onclick="this.closest('.mobile-menu').classList.remove('open')">Services</a>
+  <a href="#globe-section" onclick="this.closest('.mobile-menu').classList.remove('open')">Locations</a>
+  <a href="#approvals" onclick="this.closest('.mobile-menu').classList.remove('open')">Approvals</a>
+  <a href="#careers" onclick="this.closest('.mobile-menu').classList.remove('open')">Careers</a>
+  <a href="#contact" onclick="this.closest('.mobile-menu').classList.remove('open')">Contact Us</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div><div class="hero-grid-bg"></div>
+  <div class="container hero-content">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">EASA Part-145 &amp; Part-147 Approved</div>
+        <h1 class="display-xl hero-title">Engineering <span class="accent">Excellence</span><br>Across the Globe</h1>
+        <p class="hero-subtitle">QSA International delivers certified line maintenance, technical training, and aviation engineering services from stations across Europe, Africa, and the Middle East.</p>
+        <div class="hero-actions">
+          <a href="#services" class="btn btn-primary">Explore Services</a>
+          <a href="#globe-section" class="btn btn-outline">Our Locations</a>
+        </div>
+        <div class="hero-stats">
+          <div><div class="hero-stat-num">2013</div><div class="hero-stat-label">Founded</div></div>
+          <div><div class="hero-stat-num">14+</div><div class="hero-stat-label">Global Stations</div></div>
+          <div><div class="hero-stat-num">3</div><div class="hero-stat-label">Continents</div></div>
+          <div><div class="hero-stat-num">EASA</div><div class="hero-stat-label">Certified</div></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <svg class="hero-plane-svg" viewBox="0 0 560 380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="bg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#2D6BC4"/><stop offset="100%" stop-color="#0E2A5C"/></radialGradient>
+            <radialGradient id="gl" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#1565C0" stop-opacity="0.4"/><stop offset="100%" stop-color="#1565C0" stop-opacity="0"/></radialGradient>
+          </defs>
+          <ellipse cx="280" cy="210" rx="200" ry="100" fill="url(#gl)" class="aircraft-glow"/>
+          <path d="M 60 195 Q 100 185 200 182 L 460 178 Q 490 178 510 182 Q 520 185 520 192 Q 520 200 510 204 Q 490 208 460 208 L 200 210 Q 100 212 60 204 Z" fill="url(#bg)"/>
+          <path d="M 510 182 Q 545 185 548 192 Q 548 200 510 204" fill="#1565C0"/>
+          <ellipse cx="500" cy="190" rx="10" ry="5" fill="rgba(144,202,249,0.7)"/>
+          <path d="M 250 193 L 300 100 L 340 100 L 310 193 Z" fill="#1E3F7A"/>
+          <path d="M 260 202 L 290 296 L 330 290 L 318 202 Z" fill="#1A3570"/>
+          <path d="M 300 100 L 298 82 L 306 82 L 340 100" fill="#1565C0"/>
+          <path d="M 290 296 L 288 314 L 296 314 L 330 290" fill="#1565C0"/>
+          <path d="M 100 193 L 110 130 L 140 130 L 145 193 Z" fill="#1E3F7A"/>
+          <path d="M 115 196 L 80 220 L 82 228 L 125 205 Z" fill="#172E62"/>
+          <path d="M 118 198 L 80 174 L 82 166 L 126 190 Z" fill="#172E62"/>
+          <ellipse cx="285" cy="222" rx="28" ry="9" fill="#12295A"/>
+          <ellipse cx="315" cy="166" rx="24" ry="8" fill="#12295A"/>
+          <g opacity="0.85">
+            <rect x="330" y="185" width="14" height="9" rx="3" fill="rgba(144,202,249,0.6)"/>
+            <rect x="352" y="185" width="14" height="9" rx="3" fill="rgba(144,202,249,0.5)"/>
+            <rect x="374" y="184" width="14" height="9" rx="3" fill="rgba(144,202,249,0.55)"/>
+            <rect x="396" y="184" width="14" height="9" rx="3" fill="rgba(144,202,249,0.45)"/>
+            <rect x="418" y="183" width="14" height="9" rx="3" fill="rgba(144,202,249,0.4)"/>
+            <rect x="440" y="183" width="14" height="9" rx="3" fill="rgba(144,202,249,0.35)"/>
+            <rect x="462" y="182" width="14" height="9" rx="3" fill="rgba(144,202,249,0.3)"/>
+          </g>
+          <path d="M 180 185 L 490 180 L 490 183 L 180 188 Z" fill="rgba(232,160,32,0.7)"/>
+          <ellipse cx="290" cy="340" rx="220" ry="18" fill="rgba(21,101,192,0.07)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal">
+        <p class="label section-eyebrow">Who We Are</p>
+        <h2 class="display-lg section-title">A Decade of Aviation Excellence</h2>
+        <p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:1.05rem;line-height:1.75;">Founded in 2013, QSA International has grown into a multi-continental organisation operating across the UAE, Morocco, Europe, Africa, and the Middle East.</p>
+        <p style="color:var(--text-muted);margin-bottom:1.75rem;font-size:0.95rem;line-height:1.75;">Our foundation is built on a safety-first culture, technical precision, and regulatory excellence. Holding EASA Part-145 and Part-147 approvals, we maintain and train to the highest international standards.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem;">
+          <div style="background:var(--off-white);border-radius:var(--radius);padding:1.25rem;"><div style="font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--navy);">Part-145</div><div style="font-size:0.8rem;color:var(--text-muted);margin-top:2px;">Aircraft Line Maintenance</div></div>
+          <div style="background:var(--off-white);border-radius:var(--radius);padding:1.25rem;"><div style="font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--navy);">Part-147</div><div style="font-size:0.8rem;color:var(--text-muted);margin-top:2px;">Technical Training</div></div>
+        </div>
+        <a href="#contact" class="btn btn-dark">Get In Touch</a>
+      </div>
+      <div class="reveal" style="transition-delay:0.1s;">
+        <h3 style="font-size:1rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.5rem;">Our Journey</h3>
+        <div>
+          <div class="timeline-item"><div class="timeline-dot">13</div><div class="timeline-text"><h4>Founded — Dubai, UAE</h4><p>QSA International established its head office in Dubai, beginning operations in the Gulf region.</p></div></div>
+          <div class="timeline-item"><div class="timeline-dot" style="font-size:0.65rem;">MAR</div><div class="timeline-text"><h4>Morocco Expansion</h4><p>Morocco Head Office launched in Casablanca with stations across all major Moroccan airports.</p></div></div>
+          <div class="timeline-item"><div class="timeline-dot" style="font-size:0.65rem;">EUR</div><div class="timeline-text"><h4>European Presence</h4><p>Amsterdam Head Office opened, with operations at Schiphol and Ostend-Bruges Airport.</p></div></div>
+          <div class="timeline-item"><div class="timeline-dot" style="font-size:0.65rem;">AFR</div><div class="timeline-text"><h4>Africa &amp; Middle East Growth</h4><p>Expanded into Nairobi (Kenya) and Medina (Saudi Arabia), cementing three-continent operations.</p></div></div>
+          <div class="timeline-item"><div class="timeline-dot">↗</div><div class="timeline-text"><h4>Continued Expansion</h4><p>Ongoing growth across new markets, approvals, and training programmes.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section">
+  <div class="container">
+    <div class="section-header center reveal">
+      <p class="label section-eyebrow">What We Do</p>
+      <h2 class="display-lg section-title">Comprehensive Aviation Services</h2>
+      <p class="section-subtitle">From line maintenance to technical training and consumable supply, QSA delivers end-to-end engineering solutions for airlines and operators worldwide.</p>
+    </div>
+    <div class="grid-3 reveal" style="transition-delay:0.1s;">
+      <div class="service-card">
+        <div class="service-card-header"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><h3>Line Maintenance Services</h3></div>
+        <div class="service-card-body"><p>EASA Part-145 approved maintenance covering transit, turnaround, and overnight checks at airports across three continents.</p><ul class="service-list"><li>Transit &amp; turnaround checks</li><li>A-check line maintenance</li><li>Aircraft defect rectification</li><li>AOG support and recovery</li><li>Aircraft on ground assistance</li><li>Pre-delivery inspections</li></ul></div>
+      </div>
+      <div class="service-card">
+        <div class="service-card-header"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><h3>Technical Training</h3></div>
+        <div class="service-card-body"><p>EASA Part-147 approved training programmes for aviation professionals, from initial type ratings to continuation training.</p><ul class="service-list"><li>Category A &amp; B1/B2 basic training</li><li>Aircraft type rating courses</li><li>Continuation training programmes</li><li>Human factors training</li><li>Safety management training</li><li>Customised operator programmes</li></ul></div>
+      </div>
+      <div class="service-card">
+        <div class="service-card-header"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg></div><h3>Consumables &amp; Engineering</h3></div>
+        <div class="service-card-body"><p>Supply of aviation-grade consumables, spare parts, and ground support equipment, with full engineering support services.</p><ul class="service-list"><li>Aviation consumables supply</li><li>Rotable spare parts management</li><li>Ground support equipment</li><li>Engineering consultancy</li><li>Technical documentation</li><li>Logistics &amp; procurement support</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY QSA -->
+<section id="why" class="section">
+  <div class="container">
+    <div class="why-grid">
+      <div class="reveal">
+        <p class="label" style="color:var(--accent);margin-bottom:0.75rem;">Why QSA</p>
+        <h2 class="display-lg" style="color:var(--white);margin-bottom:1rem;">Safety Is Not a Priority. It's Our Identity.</h2>
+        <p style="color:rgba(255,255,255,0.65);font-size:1.05rem;line-height:1.75;margin-bottom:2rem;">At QSA, safety is embedded in every process, procedure, and decision. Our EASA-approved frameworks mean every aircraft we touch meets the highest international standards.</p>
+        <div>
+          <div class="why-feature"><div class="why-feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#90CAF9" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><h4>EASA Dual Approval</h4><p>Part-145 maintenance and Part-147 training approvals. Operating to European standards globally.</p></div></div>
+          <div class="why-feature"><div class="why-feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#90CAF9" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div><h4>Global Network, Local Expertise</h4><p>Stationed engineers with deep local knowledge at airports across three continents.</p></div></div>
+          <div class="why-feature"><div class="why-feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#90CAF9" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div><h4>Proven Quality Standards</h4><p>Comprehensive QA framework, regular audits, and continuous improvement culture across all stations.</p></div></div>
+          <div class="why-feature"><div class="why-feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#90CAF9" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.48 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><h4>24/7 AOG Response</h4><p>Around-the-clock aircraft-on-ground support to minimise operational disruption.</p></div></div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.15s;">
+        <h3 style="color:rgba(255,255,255,0.4);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:1.25rem;">Our Approvals &amp; Certifications</h3>
+        <div class="approval-badges">
+          <div class="approval-badge"><div class="badge-code">EASA<br>Part-145</div><div class="badge-desc">Maintenance Organisation</div></div>
+          <div class="approval-badge"><div class="badge-code">EASA<br>Part-147</div><div class="badge-desc">Training Organisation</div></div>
+          <div class="approval-badge"><div class="badge-code">GCAA</div><div class="badge-desc">UAE Civil Aviation</div></div>
+          <div class="approval-badge"><div class="badge-code">ANAC</div><div class="badge-desc">Morocco Authority</div></div>
+          <div class="approval-badge"><div class="badge-code">GACA</div><div class="badge-desc">Saudi Civil Aviation</div></div>
+          <div class="approval-badge"><div class="badge-code">+8<br>More</div><div class="badge-desc" style="color:rgba(255,255,255,0.25);">See Approvals page</div></div>
+        </div>
+        <div style="margin-top:1.75rem;padding:1.2rem;background:rgba(232,160,32,0.07);border:1px solid rgba(232,160,32,0.18);border-radius:var(--radius);">
+          <p style="color:rgba(255,255,255,0.7);font-size:0.875rem;line-height:1.65;"><strong style="color:var(--accent);">Quality Commitment:</strong> All maintenance activities are performed in accordance with approved data, manufacturer manuals, and applicable airworthiness directives.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════
+     GLOBE & LOCATIONS
+═════════════════════════════════════ -->
+<section id="globe-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label section-eyebrow">Global Presence</p>
+      <h2 class="display-lg section-title">Where We Operate</h2>
+      <p class="section-subtitle">QSA maintains head offices and stations across six countries. Select any location from the panel or click a marker to explore details.</p>
+    </div>
+    <div class="globe-layout reveal" style="transition-delay:0.1s;">
+      <!-- Globe panel -->
+      <div class="globe-panel">
+        <div id="globe-canvas"></div>
+        <!-- Floating location card -->
+        <div id="loc-card">
+          <button class="lc-close" onclick="closeLocCard()" aria-label="Close location card">&#x2715;</button>
+          <div class="lc-title" id="lc-title">—</div>
+          <div class="lc-code" id="lc-code">—</div>
+          <div id="lc-type-badge" class="lc-type-badge station">Station</div>
+          <div class="lc-divider"></div>
+          <div class="lc-row"><span class="lc-label">Country</span><span class="lc-val" id="lc-country">—</span></div>
+          <div class="lc-row"><span class="lc-label">Airport</span><span class="lc-val" id="lc-airport">—</span></div>
+          <div class="lc-row"><span class="lc-label">Address</span><span class="lc-val" id="lc-address">—</span></div>
+          <div class="lc-row"><span class="lc-label">Phone</span><span class="lc-val" id="lc-phone">—</span></div>
+          <div class="lc-row"><span class="lc-label">Email</span><span class="lc-val" id="lc-email">—</span></div>
+          <div class="lc-row"><span class="lc-label">Coords</span><span class="lc-val" id="lc-coords">—</span></div>
+          <div class="lc-verify" id="lc-verify" style="display:none;">⚠ Some details are to be verified</div>
+        </div>
+      </div>
+      <!-- Right-side legend -->
+      <div class="globe-legend">
+        <div class="legend-header">
+          <h3>Locations</h3>
+          <div class="legend-search">
+            <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" id="legend-search" placeholder="Search city or code…" oninput="filterLegend(this.value)" autocomplete="off">
+          </div>
+        </div>
+        <div class="legend-body" id="legend-body"></div>
+        <div class="globe-type-legend">
+          <div class="gtl-row"><span class="gtl-dot" style="background:#E8A020;"></span>Head Office</div>
+          <div class="gtl-row"><span class="gtl-dot" style="background:#00B4D8;"></span>Station</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════
+     APPROVALS & CERTIFICATIONS
+     Logos: ./Photos/*.jpg
+     Place processed transparent approval logos in the Photos folder next to this HTML file.
+═════════════════════════════════════ -->
+<section id="approvals" class="section">
+  <div class="container">
+    <div class="section-header center reveal">
+      <p class="label section-eyebrow">Regulatory</p>
+      <h2 class="display-lg section-title">Approvals &amp; Certifications</h2>
+      <p class="section-subtitle">Recognised by leading civil aviation authorities across our operational network.</p>
+    </div>
+    <div class="approval-filter-tabs reveal">
+      <button class="aff-btn active" onclick="filterApprovals('all',this)">All</button>
+      <button class="aff-btn" onclick="filterApprovals('Europe',this)">Europe</button>
+      <button class="aff-btn" onclick="filterApprovals('Middle East',this)">Middle East</button>
+      <button class="aff-btn" onclick="filterApprovals('Africa',this)">Africa</button>
+      <button class="aff-btn" onclick="filterApprovals('Asia',this)">Asia</button>
+      <button class="aff-btn" onclick="filterApprovals('North America',this)">North America</button>
+    </div>
+    <div class="approvals-grid reveal" id="approvals-grid" style="transition-delay:0.1s;"></div>
+    <div style="margin-top:2.5rem;background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;text-align:center;" class="reveal">
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Official approval documents and certificates are available on request.</p>
+      <a href="#contact" class="btn btn-primary">Request Documentation</a>
+    </div>
+  </div>
+</section>
+
+<!-- CAREERS -->
+<section id="careers" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label section-eyebrow">Join Our Team</p>
+      <h2 class="display-lg section-title">Careers at QSA</h2>
+      <p class="section-subtitle">We're always looking for skilled aviation professionals to join our growing global network. If you share our commitment to safety and excellence, we want to hear from you.</p>
+    </div>
+    <div class="grid-2 reveal" style="transition-delay:0.1s;margin-bottom:2rem;">
+      <div class="career-card"><div><span class="career-badge">Engineering</span><h4>Licensed Aircraft Engineer (B1/B2)</h4><p>Multiple stations — Morocco, UAE, Netherlands, Kenya</p></div><a href="#contact" class="btn btn-dark" style="flex-shrink:0;white-space:nowrap;">Apply Now</a></div>
+      <div class="career-card"><div><span class="career-badge">Training</span><h4>Technical Training Instructor</h4><p>Casablanca &amp; Amsterdam — Part-147 environment</p></div><a href="#contact" class="btn btn-dark" style="flex-shrink:0;white-space:nowrap;">Apply Now</a></div>
+      <div class="career-card"><div><span class="career-badge">Quality</span><h4>Quality Assurance Engineer</h4><p>Dubai Head Office — EASA Part-145 QA role</p></div><a href="#contact" class="btn btn-dark" style="flex-shrink:0;white-space:nowrap;">Apply Now</a></div>
+      <div class="career-card"><div><span class="career-badge">Operations</span><h4>Station Coordinator</h4><p>Various locations — operational logistics and planning</p></div><a href="#contact" class="btn btn-dark" style="flex-shrink:0;white-space:nowrap;">Apply Now</a></div>
+    </div>
+    <div style="background:var(--navy);border-radius:var(--radius-lg);padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;" class="reveal">
+      <div><h3 style="color:var(--white);font-size:1.15rem;font-weight:600;margin-bottom:0.4rem;">Don't see your role?</h3><p style="color:var(--silver);font-size:0.9rem;">Send us your CV and we'll keep it on file for future openings across our global network.</p></div>
+      <a href="mailto:careers@qsa.international" class="btn btn-accent">Send Speculative CV</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="label" style="color:var(--accent);margin-bottom:0.75rem;">Get In Touch</p>
+        <h2 class="display-lg" style="color:var(--white);margin-bottom:1rem;">Let's Talk Aviation</h2>
+        <p style="color:rgba(255,255,255,0.6);margin-bottom:2.5rem;font-size:1rem;line-height:1.75;">Whether you need line maintenance support, training programmes, or engineering consultancy, our team is ready to discuss your requirements.</p>
+        <div class="contact-item">
+          <div class="contact-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#90CAF9" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><h4>Dubai Head Office</h4><p>Office No.604, Al Masood Tower, Airport Road, Dubai, U.A.E.</p><a href="tel:+97142977626">+971 4 297 7626</a><a href="mailto:qsa.admin@qsa.international">qsa.admin@qsa.international</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#90CAF9" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><h4>Morocco Head Office</h4><p>55 Rue Ibn Ouannane Ain Sebaa, Casablanca, Morocco</p><a href="tel:+212522981606">+212 52 298 1606</a><a href="mailto:m.mngr@qsamorocco.com">m.mngr@qsamorocco.com</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#90CAF9" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><h4>Amsterdam Head Office</h4><p>Van Leewenhoekstraat 10, 1704 RC Heerhugowaard, Netherlands</p><a href="tel:+31725718191">+31 (0) 725 71 81 91</a><a href="mailto:info@qsa-amsterdam.nl">info@qsa-amsterdam.nl</a></div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.1s;">
+        <div class="contact-form-wrap">
+          <h3 style="color:var(--white);font-size:1.05rem;font-weight:600;margin-bottom:1.5rem;">Send Us a Message</h3>
+          <form id="contact-form" onsubmit="handleForm(event)">
+            <div class="form-row">
+              <div class="form-group"><label>First Name</label><input type="text" placeholder="John" required></div>
+              <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith" required></div>
+            </div>
+            <div class="form-group"><label>Email Address</label><input type="email" placeholder="john@airline.com" required></div>
+            <div class="form-group"><label>Company / Airline</label><input type="text" placeholder="Your organisation"></div>
+            <div class="form-group"><label>Subject</label>
+              <select><option>Line Maintenance Enquiry</option><option>Technical Training</option><option>Consumables &amp; Parts</option><option>Careers</option><option>General Enquiry</option></select>
+            </div>
+            <div class="form-group"><label>Message</label><textarea placeholder="Tell us about your requirements..."></textarea></div>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Send Message</button>
+          </form>
+          <div id="form-success" style="display:none;text-align:center;padding:2rem;">
+            <div style="font-size:2.5rem;margin-bottom:0.75rem;color:var(--cyan);">&#x2713;</div>
+            <h4 style="color:var(--white);margin-bottom:0.5rem;">Message Sent</h4>
+            <p style="color:var(--silver);font-size:0.875rem;">Thank you. A member of our team will respond within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.5rem;">
+          <svg width="34" height="34" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect x="33" y="43" width="54" height="40" rx="7" fill="#0A1628" stroke="#C8372A" stroke-width="2"/><text x="60" y="70" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="21" fill="#E8A020">QSA</text><path d="M 33 53 Q 18 46 8 42" stroke="#C8372A" stroke-width="2" fill="none"/><path d="M 87 53 Q 102 46 112 42" stroke="#C8372A" stroke-width="2" fill="none"/></svg>
+          <div style="font-family:var(--font-display);color:var(--white);font-weight:600;">QSA International</div>
+        </div>
+        <p>EASA Part-145 &amp; Part-147 approved aviation engineering services across Europe, Africa, and the Middle East.</p>
+      </div>
+      <div class="footer-col"><h5>Services</h5><a href="#services">Line Maintenance</a><a href="#services">Technical Training</a><a href="#services">Consumables</a><a href="#services">Engineering Support</a></div>
+      <div class="footer-col"><h5>Company</h5><a href="#about">About QSA</a><a href="#approvals">Approvals</a><a href="#globe-section">Locations</a><a href="#careers">Careers</a></div>
+      <div class="footer-col"><h5>Contact</h5><a href="mailto:qsa.admin@qsa.international">Dubai HQ</a><a href="tel:+97142977626">+971 4 297 7626</a><a href="mailto:m.mngr@qsamorocco.com">Morocco HQ</a><a href="mailto:info@qsa-amsterdam.nl">Amsterdam HQ</a></div>
+    </div>
+    <div class="footer-bottom"><span>&copy; 2025 QSA International. All rights reserved.</span><span>EASA Part-145 &amp; Part-147 Approved</span></div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   APPROVAL LOGO PATHS
+
+   IMPORTANT:
+   - Do NOT use absolute Windows paths in this file.
+   - Do NOT use Base64 strings for the approval logos.
+   - Put the processed transparent jpg logo files inside:
+
+       C:\Users\memes\Downloads\Yusef websitegay\Photos
+
+   - If this website folder is moved to another computer, keep the same structure:
+
+       index3.html
+       Photos/
+         easa.jpg
+         qcaa-qatar.jpg
+         kcaa-kenya.jpg
+         faa.jpg
+         morocco-authority.jpg
+         paca-oman.jpg
+         dgca-india.jpg
+         uk-caa.jpg
+         anacim.jpg
+         gcaa-uae.jpg
+         bahrain-transport.jpg
+         gaca-saudi.jpg
+         pcaa-pakistan.jpg
+
+   - The code below uses a relative path: ./Photos/
+   - This keeps the website portable if the root folder changes.
+════════════════════════════════════════════════════════════════ */
+
+const APPROVAL_LOGO_BASE_PATH = './Photos/';
+
+function approvalLogoPath(fileName) {
+  return `${APPROVAL_LOGO_BASE_PATH}${fileName}`;
+}
+
+const APPROVAL_LOGOS = {
+  EASA: approvalLogoPath('easa.jpg'),
+  QCAA: approvalLogoPath('qcaa.jpg'),
+  KCAA: approvalLogoPath('kcaa.jpg'),
+  FAA: approvalLogoPath('faa.jpg'),
+  MOROCCO: approvalLogoPath('baisp.jpg'),
+  PACA: approvalLogoPath('paca.jpg'),
+  DGCA_INDIA: approvalLogoPath('dgca.jpg'),
+  UK_CAA: approvalLogoPath('ukcaa.jpg'),
+  ANACIM: approvalLogoPath('ana.jpg'),
+  GCAA_UAE: approvalLogoPath('gcaa.jpg'),
+  BAHRAIN: approvalLogoPath('bht.jpg'),
+  GACA_SAUDI: approvalLogoPath('gaca.jpg'),
+  PCAA_PAKISTAN: approvalLogoPath('pkcaa.jpg')
+};
+
+
+/* ═══════════════════════════════════════════════════════════════
+   APPROVALS DATA
+
+   To add a new approval:
+   1. Add a new object here.
+   2. Place the transparent logo jpg inside ./Photos/
+   3. Reference the logo using APPROVAL_LOGOS or approvalLogoPath('filename.jpg').
+
+   Do not invent certificate numbers or approval scopes.
+════════════════════════════════════════════════════════════════ */
+const APPROVALS = [
+  /* Europe */
+  {id:1, name:'EASA', countryOrAuthority:'European Union Aviation Safety Agency', region:'European Union', category:'Europe',
+   status:'approved', logoPath:APPROVAL_LOGOS.EASA, notes:'EASA Part-145 Maintenance Organisation & Part-147 Training Organisation Approval'},
+  {id:8, name:'UK CAA', countryOrAuthority:'UK Civil Aviation Authority', region:'United Kingdom', category:'Europe',
+   status:'approved', logoPath:APPROVAL_LOGOS.UK_CAA, notes:'Details to be verified'},
+
+  /* Middle East */
+  {id:2, name:'GCAA', countryOrAuthority:'General Civil Aviation Authority — UAE', region:'United Arab Emirates', category:'Middle East',
+   status:'approved', logoPath:APPROVAL_LOGOS.GCAA_UAE, notes:'Details to be verified'},
+  {id:4, name:'GACA', countryOrAuthority:'General Authority of Civil Aviation — Saudi Arabia', region:'Saudi Arabia', category:'Middle East',
+   status:'approved', logoPath:APPROVAL_LOGOS.GACA_SAUDI, notes:'Details to be verified'},
+  {id:5, name:'QCAA', countryOrAuthority:'Civil Aviation Authority — Qatar', region:'Qatar', category:'Middle East',
+   status:'approved', logoPath:APPROVAL_LOGOS.QCAA, notes:'Details to be verified'},
+  {id:9, name:'PACA', countryOrAuthority:'Public Authority for Civil Aviation — Oman', region:'Oman', category:'Middle East',
+   status:'approved', logoPath:APPROVAL_LOGOS.PACA, notes:'Details to be verified'},
+  {id:12, name:'Bahrain MOT', countryOrAuthority:'Ministry of Transportation & Telecommunications — Bahrain', region:'Bahrain', category:'Middle East',
+   status:'approved', logoPath:APPROVAL_LOGOS.BAHRAIN, notes:'Details to be verified'},
+
+  /* Africa */
+  {id:3, name:'Moroccan Civil Aviation Authority', countryOrAuthority:'Kingdom of Morocco', region:'Morocco', category:'Africa',
+   status:'approved', logoPath:APPROVAL_LOGOS.MOROCCO, notes:'Details to be verified'},
+  {id:6, name:'KCAA', countryOrAuthority:'Kenya Civil Aviation Authority', region:'Kenya', category:'Africa',
+   status:'approved', logoPath:APPROVAL_LOGOS.KCAA, notes:'Details to be verified'},
+  {id:11, name:'ANACIM', countryOrAuthority:"Agence Nationale de l'Aviation Civile et de la Météorologie", region:'Africa', category:'Africa',
+   status:'approved', logoPath:APPROVAL_LOGOS.ANACIM, notes:'Details to be verified'},
+
+  /* Asia */
+  {id:7, name:'DGCA India', countryOrAuthority:'Directorate General of Civil Aviation — India', region:'India', category:'Asia',
+   status:'approved', logoPath:APPROVAL_LOGOS.DGCA_INDIA, notes:'Details to be verified'},
+  {id:13, name:'PCAA', countryOrAuthority:'Pakistan Civil Aviation Authority', region:'Pakistan', category:'Asia',
+   status:'approved', logoPath:APPROVAL_LOGOS.PCAA_PAKISTAN, notes:'Details to be verified'},
+
+  /* North America */
+  {id:10, name:'FAA', countryOrAuthority:'Federal Aviation Administration — USA', region:'United States', category:'North America',
+   status:'approved', logoPath:APPROVAL_LOGOS.FAA, notes:'Details to be verified'}
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   LOCATION DATA  (/data/locations.ts equivalent)
+
+   showOnGlobe / showInLegend rules:
+   - If a city has both HQ and Station, only show HQ on globe/legend.
+   - Set showOnGlobe:false + showInLegend:false on the station.
+   - Station data is preserved here for completeness.
+
+   To hide a location from globe: set showOnGlobe: false
+   To hide from legend: set showInLegend: false
+════════════════════════════════════════════════════════════════ */
+const LOCATIONS = [
+  /* ── HEAD OFFICES ── */
+  {
+    id:1, country:'UAE', city:'Dubai', displayName:'Dubai Head Office',
+    airport:'Dubai International Airport', code:'DXB', type:'hq',
+    address:'Office No.604, Al Masood Tower, Airport Road, Dubai, U.A.E.',
+    phone:'+971 4 297 7626', email:'qsa.admin@qsa.international',
+    lat:25.2532, lng:55.3657, status:'confirmed', colorGroup:'uae',
+    showOnGlobe:true, showInLegend:true
+  },
+  {
+    id:2, country:'Morocco', city:'Casablanca', displayName:'Morocco Head Office',
+    airport:'Casablanca Office', code:'CMN-HQ', type:'hq',
+    address:'55 Rue Ibn Ouannane Ain Sebaa, Casablanca, Morocco',
+    phone:'+212 52 298 1606', email:'m.mngr@qsamorocco.com',
+    lat:33.5945, lng:-7.5889, status:'confirmed', colorGroup:'morocco',
+    showOnGlobe:true, showInLegend:true
+  },
+  {
+    id:3, country:'Netherlands', city:'Amsterdam', displayName:'Amsterdam Head Office',
+    airport:'Amsterdam Schiphol Airport', code:'AMS-HQ', type:'hq',
+    address:'Van Leewenhoekstraat 10, 1704 RC Heerhugowaard, Netherlands',
+    phone:'+31 (0) 725 71 81 91', email:'info@qsa-amsterdam.nl',
+    lat:52.6710, lng:4.8310, status:'confirmed', colorGroup:'europe',
+    showOnGlobe:true, showInLegend:true
+  },
+
+  /* ── STATIONS ── */
+  {
+    id:4, country:'Morocco', city:'Marrakesh', displayName:'Marrakesh Station',
+    airport:'Aeroport Marrakech Menara', code:'RAK', type:'station',
+    address:'Aeroport Marrakech Menara, Morocco',
+    phone:'+212 66 174 6850', email:'rak.operations@qsa.international',
+    lat:31.6069, lng:-8.0363, status:'confirmed', colorGroup:'morocco',
+    showOnGlobe:true, showInLegend:true
+  },
+  {
+    /* Casablanca Station — HIDDEN on globe/legend because Morocco HQ (id:2) is same city */
+    /* showOnGlobe: false — overlaps with Morocco Head Office (CMN-HQ) */
+    /* showInLegend: false — Morocco HQ represents Casablanca in the legend */
+    id:5, country:'Morocco', city:'Casablanca', displayName:'Casablanca Station',
+    airport:'Mohammed V International Airport', code:'CMN', type:'station',
+    address:'Casablanca Mohammed V International Airport, Morocco',
+    phone:'+212 52 253 9104', email:'cmn.operations@qsamorocco.com',
+    lat:33.3675, lng:-7.5899, status:'confirmed', colorGroup:'morocco',
+    showOnGlobe:false, showInLegend:false
+  },
+  {
+    id:6, country:'Morocco', city:'Agadir', displayName:'Agadir Station',
+    airport:'Agadir Al Massira Airport', code:'AGA', type:'station',
+    address:'Agadir Al Massira Airport, Morocco',
+    phone:'+212 66 614 6704', email:'aga.operations@qsamorocco.com',
+    lat:30.3250, lng:-9.4131, status:'confirmed', colorGroup:'morocco',
+    showOnGlobe:true, showInLegend:true
+  },
+  {
+    id:7, country:'Morocco', city:'Oujda', displayName:'Oujda Station',
+    airport:'Oujda Angads Airport', code:'OUD', type:'station',
+    address:'Oujda Angads Airport, Morocco',
+    phone:'+212 66 612 6750', email:'oud.operations@qsamorocco.com',
+    lat:34.7872, lng:-1.9239, status:'confirmed', colorGroup:'morocco',
+    showOnGlobe:true, showInLegend:true
+  },
+  {
+    id:8, country:'Morocco', city:'Rabat', displayName:'Rabat Station',
+    airport:'Rabat–Salé Airport', code:'RBA', type:'station',
+    address:'Rabat–Salé Airport, Morocco',
+    phone:'+212 66 163 6714', email:'rba.operations@qsamorocco.com',
+    lat:34.0515, lng:-6.7515, status:'confirmed', colorGroup:'morocco',
+    showOnGlobe:true, showInLegend:true
+  },
+  {
+    id:9, country:'Morocco', city:'Nador', displayName:'Nador Station',
+    airport:'Nador International Airport', code:'NDR', type:'station',
+    address:'Nador International Airport, Morocco',
+    phone:'+212 66 612 6746', email:'ndr.operations@qsamorocco.com',
+    lat:34.9888, lng:-3.0282, status:'confirmed', colorGroup:'morocco',
+    showOnGlobe:true, showInLegend:true
+  },
+  {
+    id:10, country:'Morocco', city:'Fes', displayName:'Fes Station',
+    airport:'Fes Sais International Airport', code:'FES', type:'station',
+    address:'Fes Sais International Airport, Morocco',
+    phone:'+212 66 163 6714', email:'fes.operations@qsamorocco.com',
+    lat:33.9273, lng:-4.9779, status:'confirmed', colorGroup:'morocco',
+    showOnGlobe:true, showInLegend:true
+  },
+  {
+    /* Amsterdam Station — HIDDEN because Amsterdam HQ (id:3) is same city */
+    /* showOnGlobe: false — overlaps with Amsterdam Head Office (AMS-HQ) */
+    /* showInLegend: false — Amsterdam HQ represents Amsterdam in the legend */
+    id:11, country:'Netherlands', city:'Amsterdam', displayName:'Amsterdam Station',
+    airport:'Schiphol Airport', code:'AMS', type:'station',
+    address:'G Pier 3, Office NO: 0232, Schiphol Airport, Amsterdam, Netherlands',
+    phone:'+31 20 240 2740', email:'ams.operations@qsa-amsterdam.nl',
+    lat:52.3105, lng:4.7683, status:'confirmed', colorGroup:'europe',
+    showOnGlobe:false, showInLegend:false
+  },
+  {
+    id:12, country:'Belgium', city:'Ostend', displayName:'Ostend Station',
+    airport:'Ostend-Bruges International Airport', code:'OST', type:'station',
+    address:'V03 Lem Oostende-Brugge NV, Nieuwpoortsesteenweg 887-B-8400, Oostende, Belgium',
+    phone:'+32 46 508 0338', email:'operations@qsa.oct.be',
+    lat:51.1998, lng:2.8747, status:'confirmed', colorGroup:'europe',
+    showOnGlobe:true, showInLegend:true
+  },
+  {
+    id:13, country:'Kenya', city:'Nairobi', displayName:'Nairobi Station',
+    airport:'Jomo Kenyatta International Airport', code:'NBO', type:'station',
+    address:'Jomo Kenyatta International Airport, Nairobi, Kenya',
+    phone:'+254 77 117 1627', email:'nbo.operations@qsa.international',
+    lat:-1.3192, lng:36.9278, status:'confirmed', colorGroup:'africa',
+    showOnGlobe:true, showInLegend:true
+  },
+  {
+    id:14, country:'Saudi Arabia', city:'Medina', displayName:'Medina Station',
+    airport:'Prince Mohammad Bin Abdulaziz International Airport', code:'MED', type:'station',
+    address:'Prince Mohammad Bin Abdulaziz International Airport, Medina, Saudi Arabia',
+    phone:'+966 53 252 6553', email:'med.ops@qsa.international',
+    lat:24.5534, lng:39.7051, status:'confirmed', colorGroup:'gulf',
+    showOnGlobe:true, showInLegend:true
+  },
+];
+
+/* Country colors for legend dots and globe markers */
+const COUNTRY_COLORS = {
+  'UAE':          '#E8A020',
+  'Morocco':      '#00B4D8',
+  'Netherlands':  '#4CAF50',
+  'Belgium':      '#FF7043',
+  'Kenya':        '#26C6DA',
+  'Saudi Arabia': '#AB47BC',
+};
+
+/* ─── APPROVALS RENDERING ─────────────────────────────────────── */
+function renderApprovals(filter) {
+  const grid = document.getElementById('approvals-grid');
+  const data = filter === 'all' ? APPROVALS : APPROVALS.filter(a => a.category === filter);
+  grid.innerHTML = data.map(a => `
+    <div class="ap-card">
+      <div class="ap-logo-wrap">
+        <!--
+          Approval logo source:
+          ${a.logoPath}
+
+          Logo files must be placed in:
+          ./Photos/
+
+          Example:
+          ./Photos/easa.jpg
+        -->
+        <img
+          class="ap-logo-img"
+          src="${a.logoPath}"
+          alt="${a.name} logo"
+          loading="lazy"
+          onerror="this.style.display='none'; this.closest('.ap-logo-wrap').classList.add('logo-missing');"
+        >
+      </div>
+      <div class="ap-name">${a.name}</div>
+      <div class="ap-authority">${a.countryOrAuthority}</div>
+      <span class="ap-status ${a.status === 'approved' ? 'approved' : 'verify'}">
+        ${a.status === 'approved' ? 'Approved' : 'Details to be verified'}
+      </span>
+    </div>
+  `).join('');
+}
+
+function filterApprovals(filter, btn) {
+  document.querySelectorAll('.aff-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderApprovals(filter);
+}
+renderApprovals('all');
+
+/* ─── LEGEND RENDERING ────────────────────────────────────────── */
+let selectedLocId = null;
+
+function visibleLocations() {
+  return LOCATIONS.filter(l => l.showOnGlobe);
+}
+
+function legendLocations() {
+  return LOCATIONS.filter(l => l.showInLegend);
+}
+
+function groupByCountry(locs) {
+  const map = {};
+  locs.forEach(loc => {
+    if (!map[loc.country]) map[loc.country] = [];
+    map[loc.country].push(loc);
+  });
+  return map;
+}
+
+function renderLegend(searchTerm) {
+  const body = document.getElementById('legend-body');
+  const q = (searchTerm || '').toLowerCase().trim();
+  let locs = legendLocations();
+  if (q) locs = locs.filter(l =>
+    l.city.toLowerCase().includes(q) ||
+    l.country.toLowerCase().includes(q) ||
+    l.code.toLowerCase().includes(q) ||
+    l.displayName.toLowerCase().includes(q)
+  );
+  const groups = groupByCountry(locs);
+  body.innerHTML = Object.keys(groups).map(country => {
+    const items = groups[country];
+    const color = COUNTRY_COLORS[country] || '#8EA5C0';
+    const isOpen = !!q || items.some(l => l.id === selectedLocId);
+    const cgid = country.replace(/\s/g,'_');
+    return `
+      <div class="lg-country" id="cg-${cgid}">
+        <div class="lg-country-hdr" onclick="toggleCountry('${cgid}',this)" tabindex="0"
+          onkeydown="if(event.key==='Enter')toggleCountry('${cgid}',this)">
+          <span class="lg-dot" style="background:${color};"></span>
+          <span class="lg-country-name">${country}</span>
+          <span class="lg-count">${items.length}</span>
+          <span class="lg-chevron ${isOpen ? 'open' : ''}">&#x25BA;</span>
+        </div>
+        <div class="lg-stations ${isOpen ? 'open' : ''}">
+          ${items.map(loc => `
+            <div class="lg-station ${loc.id === selectedLocId ? 'active' : ''}"
+              onclick="selectLocation(${loc.id})"
+              tabindex="0"
+              onkeydown="if(event.key==='Enter')selectLocation(${loc.id})"
+              role="button" aria-label="${loc.displayName}, ${loc.code}">
+              <span class="lg-station-type" style="background:${loc.type==='hq'?'#E8A020':'#00B4D8'};"></span>
+              <span class="lg-city">${loc.city}${loc.type==='hq'?'<span class="lg-hq-tag">HQ</span>':''}</span>
+              <span class="lg-iata">${loc.code}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleCountry(cid, hdr) {
+  const panel = hdr.nextElementSibling;
+  const chev = hdr.querySelector('.lg-chevron');
+  const open = panel.classList.contains('open');
+  panel.classList.toggle('open', !open);
+  chev.classList.toggle('open', !open);
+}
+
+function filterLegend(q) { renderLegend(q); }
+
+/* ─── LOCATION CARD ───────────────────────────────────────────── */
+function openLocCard(loc) {
+  const card = document.getElementById('loc-card');
+  document.getElementById('lc-title').textContent = loc.displayName;
+  document.getElementById('lc-code').textContent = `${loc.city} — ${loc.code}`;
+  const badge = document.getElementById('lc-type-badge');
+  badge.textContent = loc.type === 'hq' ? 'Head Office' : 'Station';
+  badge.className = 'lc-type-badge ' + (loc.type === 'hq' ? 'hq' : 'station');
+  document.getElementById('lc-country').textContent = `${loc.city}, ${loc.country}`;
+  document.getElementById('lc-airport').textContent = loc.airport;
+  document.getElementById('lc-address').textContent = loc.address;
+  const ph = loc.phone && loc.phone !== 'To be verified'
+    ? `<a href="tel:${loc.phone.replace(/\s/g,'')}">${loc.phone}</a>` : '—';
+  document.getElementById('lc-phone').innerHTML = ph;
+  const em = loc.email
+    ? `<a href="mailto:${loc.email}">${loc.email}</a>` : '—';
+  document.getElementById('lc-email').innerHTML = em;
+  document.getElementById('lc-coords').textContent = `${loc.lat.toFixed(4)}°N, ${loc.lng.toFixed(4)}°`;
+  const verEl = document.getElementById('lc-verify');
+  verEl.style.display = (loc.status === 'verify') ? 'block' : 'none';
+  card.style.display = 'block';
+}
+
+function closeLocCard() {
+  document.getElementById('loc-card').style.display = 'none';
+  selectedLocId = null;
+  renderLegend(document.getElementById('legend-search').value);
+  if (globeReady) globeInstance.pointsData(buildPoints());
+}
+
+/* ─── GLOBE ───────────────────────────────────────────────────── */
+let globeInstance, globeReady = false;
+
+function buildPoints() {
+  return visibleLocations().map(loc => ({
+    lat: loc.lat, lng: loc.lng, data: loc,
+    size: loc.type === 'hq'
+      ? (loc.id === selectedLocId ? 1.0 : 0.72)
+      : (loc.id === selectedLocId ? 0.75 : 0.46),
+    color: loc.id === selectedLocId
+      ? '#FFFFFF'
+      : (loc.type === 'hq' ? '#E8A020' : '#00B4D8'),
+    altitude: loc.id === selectedLocId ? 0.03 : 0.01,
+  }));
+}
+
+function buildArcs() {
+  const dxb = LOCATIONS.find(l=>l.id===1);
+  const cmn = LOCATIONS.find(l=>l.id===2);
+  const ams = LOCATIONS.find(l=>l.id===3);
+  const arcs = [];
+  const morStations = LOCATIONS.filter(l=>l.country==='Morocco'&&l.type==='station'&&l.showOnGlobe);
+  morStations.forEach(s=>arcs.push({startLat:cmn.lat,startLng:cmn.lng,endLat:s.lat,endLng:s.lng,color:'rgba(0,180,216,0.28)'}));
+  [13,14].forEach(id=>{const s=LOCATIONS.find(l=>l.id===id);if(s)arcs.push({startLat:dxb.lat,startLng:dxb.lng,endLat:s.lat,endLng:s.lng,color:'rgba(232,160,32,0.28)'});});
+  arcs.push({startLat:dxb.lat,startLng:dxb.lng,endLat:ams.lat,endLng:ams.lng,color:'rgba(232,160,32,0.2)'});
+  arcs.push({startLat:dxb.lat,startLng:dxb.lng,endLat:cmn.lat,endLng:cmn.lng,color:'rgba(232,160,32,0.2)'});
+  const ost=LOCATIONS.find(l=>l.id===12);
+  if(ost)arcs.push({startLat:ams.lat,startLng:ams.lng,endLat:ost.lat,endLng:ost.lng,color:'rgba(76,175,80,0.3)'});
+  arcs.push({startLat:ams.lat,startLng:ams.lng,endLat:cmn.lat,endLng:cmn.lng,color:'rgba(0,180,216,0.18)'});
+  return arcs;
+}
+
+function selectLocation(id) {
+  const loc = LOCATIONS.find(l=>l.id===id);
+  if(!loc) return;
+  selectedLocId = id;
+  renderLegend(document.getElementById('legend-search').value);
+  openLocCard(loc);
+  if(globeReady) {
+    globeInstance.pointsData(buildPoints());
+    globeInstance.pointOfView({lat:loc.lat, lng:loc.lng, altitude:1.55}, 900);
+    globeInstance.controls().autoRotate = false;
+  }
+}
+
+function initGlobe() {
+  const container = document.getElementById('globe-canvas');
+  if(!container || typeof Globe==='undefined') return;
+  const w = container.offsetWidth;
+  const h = Math.max(container.offsetHeight, 540);
+  try {
+    globeInstance = Globe()(container)
+      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-dark.jpg')
+      .backgroundImageUrl('')
+      .backgroundColor('rgba(0,0,0,0)')
+      .width(w).height(h)
+      .atmosphereColor('rgba(20,90,200,0.4)')
+      .atmosphereAltitude(0.18)
+      .pointsData(buildPoints())
+      .pointLat('lat').pointLng('lng')
+      .pointAltitude('altitude')
+      .pointRadius('size')
+      .pointColor('color')
+      .pointResolution(24)
+      .arcsData(buildArcs())
+      .arcStartLat('startLat').arcStartLng('startLng')
+      .arcEndLat('endLat').arcEndLng('endLng')
+      .arcColor('color')
+      .arcDashLength(0.35).arcDashGap(0.15).arcDashAnimateTime(4000)
+      .arcStroke(0.5)
+      .onPointClick(pt => { if(pt) selectLocation(pt.data.id); })
+      .onPointHover(pt => { container.style.cursor = pt ? 'pointer' : 'grab'; });
+    globeInstance.controls().autoRotate = true;
+    globeInstance.controls().autoRotateSpeed = 0.4;
+    globeInstance.controls().enableZoom = true;
+    globeInstance.controls().minDistance = 150;
+    globeInstance.controls().maxDistance = 650;
+    globeInstance.pointOfView({lat:28, lng:10, altitude:2.3}, 1400);
+    globeReady = true;
+    container.addEventListener('mousedown', ()=>{ globeInstance.controls().autoRotate=false; });
+    container.addEventListener('touchstart', ()=>{ globeInstance.controls().autoRotate=false; },{passive:true});
+  } catch(e) {
+    container.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;color:rgba(255,255,255,0.3);font-size:0.875rem;padding:2rem;text-align:center;">Interactive globe unavailable.<br>Use the location panel on the right.</div>';
+  }
+}
+
+/* ─── FORM ──────────────────────────────────────────────────────*/
+function handleForm(e) {
+  e.preventDefault();
+  document.getElementById('contact-form').style.display='none';
+  document.getElementById('form-success').style.display='block';
+}
+
+/* ─── SCROLL REVEAL ─────────────────────────────────────────────*/
+const revObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});
+},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+
+/* ─── INIT ──────────────────────────────────────────────────────*/
+renderLegend();
+window.addEventListener('load',()=>setTimeout(initGlobe,300));
+window.addEventListener('resize',()=>{
+  if(globeReady){const c=document.getElementById('globe-canvas');globeInstance.width(c.offsetWidth).height(Math.max(c.offsetHeight,400));}
+});
+</script>
+</body>
+</html>
