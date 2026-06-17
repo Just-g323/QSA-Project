@@ -39,11 +39,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 1.5rem;background
 .nav-inner{max-width:1240px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;}
 .nav-logo{display:flex;align-items:center;gap:0px;text-decoration:none;}
 .nav-logo-img{
-  width:130px;
-  height:130px;
+  width:170px;
+  height:170px;
   object-fit:contain;
   border-radius:5px;
-  margin-right:-20px;
+  margin-right:-40px;
+  margin-left: -40px;
   filter:
     drop-shadow(0 0 5px rgba(125,211,252,0.65))
     drop-shadow(0 0 12px rgba(56,189,248,0.35));
@@ -130,8 +131,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 1.5rem;background
 .hero-logo-img{
   position:relative;
   z-index:1;
-  width:100%;
-  max-width:430px;
+  width: 1300px;
+  height: 1300px;
+  margin-left: 100px;
+  margin-top: -80px;
   height:auto;
   display:block;
   filter:
@@ -679,17 +682,62 @@ footer{background:#060E1C;color:var(--silver);padding:60px 0 30px;}
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.5rem;">
-          <svg width="34" height="34" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect x="33" y="43" width="54" height="40" rx="7" fill="#0A1628" stroke="#C8372A" stroke-width="2"/><text x="60" y="70" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="21" fill="#E8A020">QSA</text><path d="M 33 53 Q 18 46 8 42" stroke="#C8372A" stroke-width="2" fill="none"/><path d="M 87 53 Q 102 46 112 42" stroke="#C8372A" stroke-width="2" fill="none"/></svg>
-          <div style="font-family:var(--font-display);color:var(--white);font-weight:600;">QSA International</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:-56px;margin-top:-60px;">
+          <img
+            src="./Photos/qsa-main-logo(small).png"
+            alt="QSA International Logo"
+            style="
+              height:140px;
+              width:auto;
+              margin-left:-80px;
+              margin-right:-70px;
+              border-radius:5px;
+              filter:
+              brightness(0.75)
+              drop-shadow(0 0 5px rgba(125,211,252,0.65))
+              drop-shadow(0 0 12px rgba(56,189,248,0.35));
+            "
+          >
+          <div style="font-family:var(--font-display);color:var(--white);font-weight:600;">
+            QSA International
+          </div>
         </div>
-        <p>EASA Part-145 &amp; Part-147 approved aviation engineering services across Europe, Africa, and the Middle East.</p>
+
+        <p>
+          EASA Part-145 &amp; Part-147 approved aviation engineering services
+          across Europe, Africa, and the Middle East.
+        </p>
       </div>
-      <div class="footer-col"><h5>Services</h5><a href="#services">Line Maintenance</a><a href="#services">Technical Training</a><a href="#services">Consumables</a><a href="#services">Engineering Support</a></div>
-      <div class="footer-col"><h5>Company</h5><a href="#about">About QSA</a><a href="#approvals">Approvals</a><a href="#globe-section">Locations</a><a href="#careers">Careers</a></div>
-      <div class="footer-col"><h5>Contact</h5><a href="mailto:qsa.admin@qsa.international">Dubai HQ</a><a href="tel:+97142977626">+971 4 297 7626</a><a href="mailto:m.mngr@qsamorocco.com">Morocco HQ</a><a href="mailto:info@qsa-amsterdam.nl">Amsterdam HQ</a></div>
+
+      <div class="footer-col">
+        <h5>Services</h5>
+        <a href="#services">Line Maintenance</a>
+        <a href="#services">Technical Training</a>
+        <a href="#services">Consumables</a>
+        <a href="#services">Engineering Support</a>
+      </div>
+
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="#about">About QSA</a>
+        <a href="#approvals">Approvals</a>
+        <a href="#globe-section">Locations</a>
+        <a href="#careers">Careers</a>
+      </div>
+
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="mailto:qsa.admin@qsa.international">Dubai HQ</a>
+        <a href="tel:+97142977626">+971 4 297 7626</a>
+        <a href="mailto:m.mngr@qsamorocco.com">Morocco HQ</a>
+        <a href="mailto:info@qsa-amsterdam.nl">Amsterdam HQ</a>
+      </div>
     </div>
-    <div class="footer-bottom"><span>&copy; 2025 QSA International. All rights reserved.</span><span>EASA Part-145 &amp; Part-147 Approved</span></div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2025 QSA International. All rights reserved.</span>
+      <span>EASA Part-145 &amp; Part-147 Approved</span>
+    </div>
   </div>
 </footer>
 
