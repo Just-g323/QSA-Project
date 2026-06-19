@@ -37,18 +37,29 @@ h1,h2,h3,h4,h5{font-family:var(--font-display);}
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 1.5rem;background:rgba(10,22,40,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);height:68px;display:flex;align-items:center;}
 .nav-inner{max-width:1240px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{display:flex;align-items:center;gap:0px;text-decoration:none;}
+.nav-logo{
+  display:flex;
+  align-items:center;
+  gap:0;
+  text-decoration:none;
+  min-width:0;
+}
+
 .nav-logo-img{
-  width:170px;
-  height:170px;
+  width:80px;
+  height:54px;
+  flex:0 0 50px;
   object-fit:contain;
-  border-radius:5px;
-  margin-right:-40px;
-  margin-left: -40px;
+  object-position:center;
+  display:block;
+  border-radius:6px;
+  transform:scale(2);
+  transform-origin:center;
   filter:
     drop-shadow(0 0 5px rgba(125,211,252,0.65))
     drop-shadow(0 0 12px rgba(56,189,248,0.35));
 }
+
 .nav-logo-text{color:var(--white);font-family:var(--font-display);font-weight:600;font-size:1rem;line-height:1.2;}
 .nav-logo-text span{display:block;font-size:0.7rem;font-weight:400;color:var(--silver);letter-spacing:0.06em;}
 .nav-links{display:flex;align-items:center;gap:0.25rem;list-style:none;}
@@ -86,7 +97,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 1.5rem;background
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 80% 50%,rgba(21,101,192,0.22) 0%,transparent 65%),linear-gradient(160deg,#0A1628 0%,#0E1F40 40%,#122850 100%);}
 .hero-grid-bg{position:absolute;inset:0;opacity:0.05;background-image:linear-gradient(rgba(255,255,255,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.5) 1px,transparent 1px);background-size:60px 60px;}
 .hero-content{position:relative;z-index:2;width:100%;}
-.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;min-height:100vh;padding:120px 0 80px;}
+.hero-inner{
+  display:grid;
+  grid-template-columns:0.85fr 1.15fr;
+  gap:2rem;
+  align-items:center;
+  min-height:100vh;
+  padding:120px 0 80px;
+}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(21,101,192,0.2);border:1px solid rgba(21,101,192,0.35);color:#90CAF9;font-size:0.78rem;font-weight:600;letter-spacing:0.08em;padding:0.4rem 0.9rem;border-radius:100px;margin-bottom:1.5rem;}
 .hero-badge::before{content:'';width:6px;height:6px;background:#42A5F5;border-radius:50%;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
@@ -109,8 +127,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 1.5rem;background
   align-items:center;
   justify-content:center;
   width:100%;
-  max-width:560px;
-  padding:1.25rem;
+  max-width:none;
+  padding:0;
+  overflow:visible;
 }
 
 .hero-logo-wrap::before{
@@ -131,12 +150,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 1.5rem;background
 .hero-logo-img{
   position:relative;
   z-index:1;
-  width: 1300px;
-  height: 1300px;
-  margin-left: 100px;
-  margin-top: -80px;
+  width:min(62vw, 820px);
+  max-width:none;
   height:auto;
   display:block;
+  object-fit:contain;
+  transform:scale(1.15);
+  transform-origin:center;
   filter:
     drop-shadow(0 0 10px rgba(125,211,252,0.80))
     drop-shadow(0 0 24px rgba(56,189,248,0.55))
@@ -345,6 +365,47 @@ footer{background:#060E1C;color:var(--silver);padding:60px 0 30px;}
 .footer-col a{display:block;color:var(--silver);text-decoration:none;font-size:0.875rem;margin-bottom:0.6rem;transition:color 0.2s;}
 .footer-col a:hover{color:var(--white);}
 .footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;color:rgba(255,255,255,0.35);}
+
+/* Footer brand logo block — stable, fixed-size, no inline styles */
+.footer-brand-logo{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  margin-bottom:1rem;
+}
+
+.footer-logo-img{
+  width:60px;
+  height:64px;
+  flex:0 0 60px;
+  object-fit:contain;
+  object-position:center;
+  display:block;
+  border-radius:6px;
+  transform:scale(2.5);
+  transform-origin:center;
+  filter:
+    brightness(0.85)
+    drop-shadow(0 0 5px rgba(125,211,252,0.65))
+    drop-shadow(0 0 12px rgba(56,189,248,0.35));
+}
+
+.footer-logo-title{
+  font-family:var(--font-display);
+  color:var(--white);
+  font-weight:600;
+  line-height:1.2;
+  margin-left:2px;
+}
+
+.footer-quote{
+  margin-top:0.35rem;
+  font-family:var(--font-display);
+  font-size:0.95rem;
+  font-weight:600;
+  color:var(--accent);
+  letter-spacing:0.02em;
+}
 
 /* RESPONSIVE */
 @media(max-width:1100px){.approvals-grid{grid-template-columns:repeat(3,1fr);}}
@@ -682,24 +743,15 @@ footer{background:#060E1C;color:var(--silver);padding:60px 0 30px;}
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:-56px;margin-top:-60px;">
+        <div class="footer-brand-logo">
           <img
             src="./Photos/qsa-main-logo(small).png"
             alt="QSA International Logo"
-            style="
-              height:140px;
-              width:auto;
-              margin-left:-80px;
-              margin-right:-70px;
-              border-radius:5px;
-              filter:
-              brightness(0.75)
-              drop-shadow(0 0 5px rgba(125,211,252,0.65))
-              drop-shadow(0 0 12px rgba(56,189,248,0.35));
-            "
+            class="footer-logo-img"
           >
-          <div style="font-family:var(--font-display);color:var(--white);font-weight:600;">
-            QSA International
+          <div>
+            <div class="footer-logo-title">QSA International</div>
+            <div class="footer-quote">&ldquo;We Exist to Deliver&rdquo;</div>
           </div>
         </div>
 
@@ -748,13 +800,12 @@ footer{background:#060E1C;color:var(--silver);padding:60px 0 30px;}
    IMPORTANT:
    - Do NOT use absolute Windows paths in this file.
    - Do NOT use Base64 strings for the approval logos.
-   - Put the processed transparent jpg logo files inside:
+   - Put the processed transparent jpg logo files inside the
+     "Photos" folder that sits next to this HTML file.
 
-       C:\Users\memes\Downloads\Yusef websitegay\Photos
+   - Keep this folder structure so the site stays portable:
 
-   - If this website folder is moved to another computer, keep the same structure:
-
-       index3.html
+       QSA-Website.html
        Photos/
          easa.jpg
          qcaa-qatar.jpg
@@ -978,6 +1029,75 @@ const LOCATIONS = [
     lat:24.5534, lng:39.7051, status:'confirmed', colorGroup:'gulf',
     showOnGlobe:true, showInLegend:true
   },
+
+  /* ── NEW STATIONS ──────────────────────────────────────────────
+     Added per update request. All are normal stations (type:'station'),
+     visible on the globe and in the legend.
+  ──────────────────────────────────────────────────────────────── */
+
+  /* UAE stations — complete data */
+  {
+    id:15, country:'UAE', city:'Abu Dhabi', displayName:'Abu Dhabi Station',
+    airport:'Zayed International Airport', code:'AUH', type:'station',
+    address:'Zayed International Airport, Abu Dhabi, United Arab Emirates',
+    phone:'+971 50 678 3014', email:'auh.ops@qsa.international',
+    lat:24.4419, lng:54.6501, status:'verify', colorGroup:'uae',
+    showOnGlobe:true, showInLegend:true
+  },
+  {
+    id:16, country:'UAE', city:'Sharjah', displayName:'Sharjah Station',
+    airport:'Sharjah International Airport', code:'SHJ', type:'station',
+    address:'Sharjah International Airport, Sharjah, United Arab Emirates',
+    phone:'+971 50 678 3014', email:'shj.ops@qsa.international',
+    lat:25.3286, lng:55.5172, status:'verify', colorGroup:'uae',
+    showOnGlobe:true, showInLegend:true
+  },
+  {
+    id:17, country:'UAE', city:'Dubai World Central', displayName:'DWC Station',
+    airport:'Al Maktoum International Airport', code:'DWC', type:'station',
+    address:'Al Maktoum International Airport, Dubai World Central, Emirates Road, Jebel Ali, Dubai, United Arab Emirates',
+    phone:'+971 50 678 3014', email:'dwc.ops@qsa.international',
+    lat:24.8964, lng:55.1614, status:'verify', colorGroup:'uae',
+    showOnGlobe:true, showInLegend:true
+  },
+
+  /* Morocco — new station with missing data marked as N/A */
+  {
+    id:18, country:'Morocco', city:'Tangier', displayName:'Tangier Station',
+    airport:'N/A', code:'TNG', type:'station',
+    address:'N/A',
+    phone:'N/A', email:'N/A',
+    lat:35.7269, lng:-5.9169, status:'verify', colorGroup:'morocco',
+    showOnGlobe:true, showInLegend:true
+  },
+
+  /* France — new stations, missing data marked as N/A */
+  {
+    id:19, country:'France', city:'Paris', displayName:'Paris CDG Station',
+    airport:'Paris Charles de Gaulle Airport', code:'CDG', type:'station',
+    address:'N/A',
+    phone:'N/A', email:'N/A',
+    lat:49.0097, lng:2.5479, status:'verify', colorGroup:'france',
+    showOnGlobe:true, showInLegend:true
+  },
+  {
+    id:20, country:'France', city:'Paris', displayName:'Paris Orly Station',
+    airport:'Paris Orly Airport', code:'ORY', type:'station',
+    address:'N/A',
+    phone:'N/A', email:'N/A',
+    lat:48.7233, lng:2.3794, status:'verify', colorGroup:'france',
+    showOnGlobe:true, showInLegend:true
+  },
+
+  /* Belgium — new station, missing data marked as N/A */
+  {
+    id:21, country:'Belgium', city:'Liège', displayName:'Liège Station',
+    airport:'N/A', code:'LGG', type:'station',
+    address:'N/A',
+    phone:'N/A', email:'N/A',
+    lat:50.6374, lng:5.4432, status:'verify', colorGroup:'belgium',
+    showOnGlobe:true, showInLegend:true
+  },
 ];
 
 /* Country colors for legend dots and globe markers */
@@ -988,6 +1108,7 @@ const COUNTRY_COLORS = {
   'Belgium':      '#FF7043',
   'Kenya':        '#26C6DA',
   'Saudi Arabia': '#AB47BC',
+  'France':       '#7986CB',
 };
 
 /* ─── APPROVALS RENDERING ─────────────────────────────────────── */
@@ -1113,14 +1234,23 @@ function openLocCard(loc) {
   badge.textContent = loc.type === 'hq' ? 'Head Office' : 'Station';
   badge.className = 'lc-type-badge ' + (loc.type === 'hq' ? 'hq' : 'station');
   document.getElementById('lc-country').textContent = `${loc.city}, ${loc.country}`;
-  document.getElementById('lc-airport').textContent = loc.airport;
-  document.getElementById('lc-address').textContent = loc.address;
-  const ph = loc.phone && loc.phone !== 'To be verified'
-    ? `<a href="tel:${loc.phone.replace(/\s/g,'')}">${loc.phone}</a>` : '—';
+  document.getElementById('lc-airport').textContent = loc.airport || 'N/A';
+  document.getElementById('lc-address').textContent = (loc.address && loc.address !== 'N/A') ? loc.address : 'N/A';
+
+  /* Only create a tel: link for a real phone number. */
+  const hasPhone = loc.phone && loc.phone !== 'N/A' && loc.phone !== 'To be verified';
+  const ph = hasPhone
+    ? `<a href="tel:${loc.phone.replace(/\s/g,'')}">${loc.phone}</a>`
+    : 'N/A';
   document.getElementById('lc-phone').innerHTML = ph;
-  const em = loc.email
-    ? `<a href="mailto:${loc.email}">${loc.email}</a>` : '—';
+
+  /* Only create a mailto: link for a real email address. */
+  const hasEmail = loc.email && loc.email !== 'N/A';
+  const em = hasEmail
+    ? `<a href="mailto:${loc.email}">${loc.email}</a>`
+    : 'N/A';
   document.getElementById('lc-email').innerHTML = em;
+
   document.getElementById('lc-coords').textContent = `${loc.lat.toFixed(4)}°N, ${loc.lng.toFixed(4)}°`;
   const verEl = document.getElementById('lc-verify');
   verEl.style.display = (loc.status === 'verify') ? 'block' : 'none';
@@ -1155,7 +1285,7 @@ function buildArcs() {
   const cmn = LOCATIONS.find(l=>l.id===2);
   const ams = LOCATIONS.find(l=>l.id===3);
   const arcs = [];
-  const morStations = LOCATIONS.filter(l=>l.country==='Morocco'&&l.type==='station'&&l.showOnGlobe);
+  const morStations = LOCATIONS.filter(l=>l.country==='Morocco'&&l.type==='station'&&l.showOnGlobe&&l.id!==18);
   morStations.forEach(s=>arcs.push({startLat:cmn.lat,startLng:cmn.lng,endLat:s.lat,endLng:s.lng,color:'rgba(0,180,216,0.28)'}));
   [13,14].forEach(id=>{const s=LOCATIONS.find(l=>l.id===id);if(s)arcs.push({startLat:dxb.lat,startLng:dxb.lng,endLat:s.lat,endLng:s.lng,color:'rgba(232,160,32,0.28)'});});
   arcs.push({startLat:dxb.lat,startLng:dxb.lng,endLat:ams.lat,endLng:ams.lng,color:'rgba(232,160,32,0.2)'});
@@ -1163,6 +1293,23 @@ function buildArcs() {
   const ost=LOCATIONS.find(l=>l.id===12);
   if(ost)arcs.push({startLat:ams.lat,startLng:ams.lng,endLat:ost.lat,endLng:ost.lng,color:'rgba(76,175,80,0.3)'});
   arcs.push({startLat:ams.lat,startLng:ams.lng,endLat:cmn.lat,endLng:cmn.lng,color:'rgba(0,180,216,0.18)'});
+
+  /* New UAE stations — subtle arcs from Dubai Head Office (id:1) */
+  [15,16,17].forEach(id=>{
+    const s = LOCATIONS.find(l=>l.id===id);
+    if(s) arcs.push({startLat:dxb.lat,startLng:dxb.lng,endLat:s.lat,endLng:s.lng,color:'rgba(232,160,32,0.22)'});
+  });
+
+  /* New Morocco station (Tangier, id:18) — subtle arc from Morocco Head Office (id:2) */
+  const tng = LOCATIONS.find(l=>l.id===18);
+  if(tng) arcs.push({startLat:cmn.lat,startLng:cmn.lng,endLat:tng.lat,endLng:tng.lng,color:'rgba(0,180,216,0.22)'});
+
+  /* New European stations (Paris CDG, Paris Orly, Liège) — subtle arcs from Amsterdam Head Office (id:3) */
+  [19,20,21].forEach(id=>{
+    const s = LOCATIONS.find(l=>l.id===id);
+    if(s) arcs.push({startLat:ams.lat,startLng:ams.lng,endLat:s.lat,endLng:s.lng,color:'rgba(76,175,80,0.2)'});
+  });
+
   return arcs;
 }
 
