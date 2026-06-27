@@ -457,7 +457,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 1.5rem;background
 }
 .ap-logo-wrap{
   width:100%;
-  height:76px;
+  height:100px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -469,7 +469,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 1.5rem;background
 
 /* Crops a little from the left and right edges of each approval image */
 .ap-logo-img{
-  max-width:190px;
+  max-width:170px;
   max-height:90px;
   width:auto;
   height:auto;
@@ -478,7 +478,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 1.5rem;background
   mix-blend-mode:normal;
 
   /* side crop */
-  clip-path:inset(0 6% 0 6%);
+  clip-path:inset(0 2% 0 2%);
   transform:scale(1.06);
 }
 .ap-name{font-size:0.82rem;font-weight:700;color:var(--navy);margin-bottom:0.15rem;font-family:var(--font-display);}
@@ -503,6 +503,64 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 1.5rem;background
 .career-badge{background:rgba(21,101,192,0.1);color:var(--blue);font-size:0.75rem;font-weight:600;padding:0.25rem 0.7rem;border-radius:100px;display:inline-block;margin-bottom:0.5rem;}
 .career-card h4{font-size:1rem;font-weight:600;color:var(--navy);}
 .career-card p{font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;}
+/* Careers layout: exactly 2 columns, 2 rows */
+.careers-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:1.5rem;
+}
+
+.careers-grid .career-card{
+  min-height:132px;
+}
+
+/* Keep buttons away from the card edge */
+.careers-grid .career-card .btn{
+  flex:0 0 auto;
+  margin-left:1rem;
+}
+
+/* On smaller screens, stack the career cards */
+@media(max-width:800px){
+  .careers-grid{
+    grid-template-columns:1fr;
+  }
+
+  .careers-grid .career-card{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .careers-grid .career-card .btn{
+    margin-left:0;
+    margin-top:1rem;
+  }
+}
+
+.career-card-wide > div{
+  flex:1;
+  min-width:0;
+}
+
+.career-card-wide .btn{
+  flex:0 0 auto;
+  margin-left:auto;
+}
+
+/* Mobile fix */
+@media(max-width:700px){
+  .career-card,
+  .career-card-wide{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .career-card .btn,
+  .career-card-wide .btn{
+    margin-left:0;
+    margin-top:1rem;
+  }
+}
 
 /* CONTACT */
 #contact{background:var(--navy);}
@@ -859,11 +917,18 @@ footer{background:#060E1C;color:var(--silver);padding:60px 0 30px;}
       <h2 class="display-lg section-title">Careers at QSA</h2>
       <p class="section-subtitle">We're always looking for skilled aviation professionals to join our growing global network. If you share our commitment to safety and excellence, we want to hear from you.</p>
     </div>
-    <div class="grid-2 reveal" style="transition-delay:0.1s;margin-bottom:2rem;">
+    <div class="careers-grid reveal" style="transition-delay:0.1s;margin-bottom:2rem;">
       <div class="career-card"><div><span class="career-badge">Engineering</span><h4>Licensed Aircraft Engineer (B1/B2)</h4><p>Multiple stations — Morocco, UAE, Netherlands, Kenya</p></div><a href="#contact" class="btn btn-dark" style="flex-shrink:0;white-space:nowrap;">Apply Now</a></div>
       <div class="career-card"><div><span class="career-badge">Training</span><h4>Technical Training Instructor</h4><p>Casablanca &amp; Amsterdam — Part-147 environment</p></div><a href="#contact" class="btn btn-dark" style="flex-shrink:0;white-space:nowrap;">Apply Now</a></div>
       <div class="career-card"><div><span class="career-badge">Quality</span><h4>Quality Assurance Engineer</h4><p>Dubai Head Office — EASA Part-145 QA role</p></div><a href="#contact" class="btn btn-dark" style="flex-shrink:0;white-space:nowrap;">Apply Now</a></div>
-      <div class="career-card"><div><span class="career-badge">Operations</span><h4>Station Coordinator</h4><p>Various locations — operational logistics and planning</p></div><a href="#contact" class="btn btn-dark" style="flex-shrink:0;white-space:nowrap;">Apply Now</a></div>
+      <div class="career-card">
+        <div>
+          <span class="career-badge">Operations</span>
+          <h4>Station Coordinator</h4>
+          <p>Various locations — operational logistics and planning</p>
+        </div>
+        <a href="#contact" class="btn btn-dark" style="flex-shrink:0;white-space:nowrap;">Apply Now</a>
+      </div>
     </div>
     <div style="background:var(--navy);border-radius:var(--radius-lg);padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;" class="reveal">
       <div><h3 style="color:var(--white);font-size:1.15rem;font-weight:600;margin-bottom:0.4rem;">Don't see your role?</h3><p style="color:var(--silver);font-size:0.9rem;">Send us your CV and we'll keep it on file for future openings across our global network.</p></div>
@@ -1018,13 +1083,13 @@ const APPROVAL_LOGOS = {
   QCAA: approvalLogoPath('qcaa.jpg'),
   KCAA: approvalLogoPath('kcaa.jpg'),
   FAA: approvalLogoPath('faa.jpg'),
-  MOROCCO: approvalLogoPath('baisp.jpg'),
+  MOROCCO: approvalLogoPath('mcaa.jpg'),
   PACA: approvalLogoPath('paca.jpg'),
   DGCA_INDIA: approvalLogoPath('dgca.jpg'),
   UK_CAA: approvalLogoPath('ukcaa.jpg'),
   ANACIM: approvalLogoPath('ana.jpg'),
   GCAA_UAE: approvalLogoPath('gcaa.jpg'),
-  BAHRAIN: approvalLogoPath('bht.jpg'),
+  BAHRAIN: approvalLogoPath('baisp.jpg'),
   GACA_SAUDI: approvalLogoPath('gaca.jpg'),
   PCAA_PAKISTAN: approvalLogoPath('pkcaa.jpg')
 };
@@ -1516,7 +1581,7 @@ function initGlobe() {
   const h = Math.max(container.offsetHeight, 540);
   try {
     globeInstance = Globe()(container)
-      .globeImageUrl('./Photos/GlobeImage.png')
+      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-dark.jpg')
       .backgroundImageUrl('')
       .backgroundColor('rgba(0,0,0,0)')
       .width(w).height(h)
